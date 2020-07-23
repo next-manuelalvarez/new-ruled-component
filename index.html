@@ -1,0 +1,707 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Create a new component</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="dca9a0c1-81c2-49b9-a0ad-2a3f09b9dee6" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1500930540495-e92875696a16?ixlib=rb-1.2.1&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">👩🏻‍💻</span></div><h1 class="page-title">Create a new component</h1></header><div class="page-body"><nav id="97d9b1d8-cb17-4c68-90bb-b8da5dca6ee8" class="block-color-yellow table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#50aed126-69b5-4b3b-8166-cb43cfd6f011">1. Crear una rama en un fork del monorepo</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#45d48be9-6b5d-4b97-b3a1-80240d5180ec">2. Crear un nuevo componente -  Cells CLI</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1754947e-5b48-4e5c-86b9-e4d74a5ee6c0">3. Dependencias - package json</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c4848d9a-c165-46d8-9e06-e4ecb86ebda5">4. Snapshots</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5955f8fe-a476-4754-ae06-26aa0bf6b90b">5. Styles</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f884106e-e023-47ea-98e2-8a0a7e47257d">6. Enviar Pull Request</a></div></nav><h1 id="50aed126-69b5-4b3b-8166-cb43cfd6f011" class="">1. Crear una rama en un fork del monorepo</h1><ul id="ea739887-5dd5-4417-a1a7-6859630597d9" class="bulleted-list"><li>Crear un fork del repositorio <a href="https://globaldevtools.bbva.com/bitbucket/projects/BBVA_GLOBAL_UI_STUDIO_WEB_COMPONENTS/repos/bbva-web-components-app/browse">bbva-web-components-app</a></li></ul><ul id="1b8e3d5e-a436-4566-adbd-e896523274cf" class="bulleted-list"><li>Crear un rama en el fork <code>git branch -b feature/jira-cod[opcional] + description</code></li></ul><ul id="21e303fc-65d5-4445-aff0-82ae9ddd8de8" class="bulleted-list"><li>Una vez concluido el desarrollo lanzar una pull request de esta rama a a <strong>master</strong> del repositorio <strong>original</strong></li></ul><h1 id="45d48be9-6b5d-4b97-b3a1-80240d5180ec" class="">2. Crear un nuevo componente -  Cells CLI</h1><p id="ea315679-e937-4904-bb99-3f753a47c743" class="">Cells CLI 3.0.0 es la versión mínima requerida</p><pre id="6001fb75-6a45-4a8d-9d1e-25747ea08af8" class="code"><code>cells lit-component:create [name] [name-space]
+
+&gt; cells lit:component bbva-button-basic @bbva-web-component</code></pre><p id="e06b58fe-6b34-4c51-a9c2-f798cc80c911" class="">                      (<em>El namespace de los componentes básicos es @bbva-web-components)</em></p><p id="04777920-e7de-4631-836b-85674438a325" class="">Dependiendo de la versión utilizada de Cells CLI, la estructura de archivos será  una de las siguientes :</p><pre id="724f0625-1a14-4a3d-b1f4-f4092eacbf57" class="code"><code><mark class="highlight-yellow"><strong>≤ 3.0.0
+</strong></mark>
+├─ .editorconfig
+├─ .gitignore
+├─ Jenkinsfile
+├─ README.md
+├─ bbva-butom-custom-styles.js
+├─ bbva-butom-custom.js
+├─ bbva-butom-custom.scss
+├─ demo
+│  ├─ css
+│  │  └─ demo-styles.js
+│  ├─ demo.js
+│  └─ index.html
+├─ index.html
+├─ locales
+│  ├─ en.json
+│  └─ es.json
+├─ package-lock.json
+├─ package.json
+└─ test
+   ├─ bbva-butom-custom.test.js
+   └─ integration
+      ├─ bbva-butom-custom.html
+      └─ config.json</code></pre><p id="6e681834-19f9-4065-a2b0-2619354c9c7a" class="">
+</p><p id="43d88541-aa01-426d-9ebb-62829adc55d4" class="">
+</p><pre id="af9f4330-0fac-47b3-bc7a-f545d200c2ef" class="code"><code>	<mark class="highlight-yellow">&gt; 3.0.0
+
+	</mark>├─ .editorconfig
+	├─ .gitignore
+	├─ Jenkinsfile
+	├─ README.md
+	├─ bbva-buttom-custom.js
+	├─ demo
+	│  ├─ css
+	│  │  └─ demo-styles.js
+	│  ├─ demo.js
+	│  └─ index.html
+	├─ index.html
+	├─ index.js
+	├─ package-lock.json
+	├─ package.json
+	├─ src
+	│  ├─ BbvaButtomCustom-styles.js
+	│  ├─ BbvaButtomCustom.js
+	│  └─ BbvaButtomCustom.scss
+	└─ test
+	   ├─ bbva-buttom-custom.test.js
+	   └─ integration
+	      ├─ bbva-buttom-custom.html
+	      └─ config.json
+</code></pre><p id="be6ed3f3-d56b-4b34-8898-6fb1863809a8" class="">
+</p><p id="ae93e828-dbda-4ed6-80d2-40af367c53bd" class="">Ambas estructuras son compatibles entre sí, pero <strong>se recomienda utilizar la segunda</strong> para unificar todos los componentes .</p><h1 id="1754947e-5b48-4e5c-86b9-e4d74a5ee6c0" class="">3. Dependencias - package json</h1><ul id="3e5ebdfd-ed53-48a0-bd9d-e1f98b2fe8a9" class="bulleted-list"><li>Los campos <strong>description</strong> y <strong>keywords</strong> son <strong>obligatorios</strong><ul id="27d74489-3ba5-44b7-9c3b-39e7157476df" class="bulleted-list"><li>Description - (string) descripción del componente</li></ul><ul id="1defae69-a3ff-40fb-a8d7-88352ed0d0d9" class="bulleted-list"><li>Keywords - (array) colección de palabras clave descriptivas del componente en custión </li></ul></li></ul><ul id="81edeb96-d934-4f63-bb7a-59cfc63fab42" class="bulleted-list"><li>El campo <strong>scripts</strong> debe llevar los siguiente comandos :</li></ul><pre id="6a2b7836-6c16-431d-ba56-f06ce0a1354c" class="code"><code>&quot;scripts&quot;: {
+	&quot;test&quot;: &quot;npx karma start ../../_karma/conf.js&quot;,
+	&quot;test:compatibility&quot;: &quot;npm run test -- --force-polyfills --compatibility all&quot;,
+	&quot;test:compatibility:watch&quot;: &quot;npm run test:compatibility -- --auto-watch=true --single-run=false&quot;,
+	&quot;test:prune-snapshots&quot;: &quot;npm run test -- --prune-snapshots&quot;,
+	&quot;test:update-snapshots&quot;: &quot;npm run test -- --update-snapshots&quot;,
+	&quot;test:watch&quot;: &quot;npm run test -- --auto-watch=true --single-run=false&quot;
+}</code></pre><p id="7e9c6f8c-3874-4158-a2f7-0bdf41020330" class="">
+</p><p id="3ed4701d-4ff3-4f7e-a2d1-31191b8d0048" class="">Los comandos test y test-watch lanzan las baterías de test unitarios. Con el primero se obtiene un resultado de los test y el porcentaje de cobertura de los mismo. El segundo sirve para mantener los test lanzados mientras se desarrollan nuevas pruebas.</p><p id="2cace764-33dc-451f-9e74-50a43cd268ec" class="">
+</p><p id="59e27d97-432e-4871-843c-cffd376a8373" class="">Se deben realizar test de snapshot mediante los comandos anteriormente descritos. Cada vez que se haga un cambio en el componente es recomendable actualizar estos snaphots. (más información en el siguiente apartado 4.Snapshots)</p><h1 id="c4848d9a-c165-46d8-9e06-e4ecb86ebda5" class="">4. Snapshots</h1><p id="2fd7d611-250c-463f-81cf-ee397993686b" class="">Mediante <em>npm</em> o <em>yarn</em> deben realizarse los test snapshot, para ello son necesarios los siguiente pasos:</p><p id="231ef2c1-96d5-4b27-9d16-c392fd7650a6" class="">
+</p><ol id="2c5fe2e3-88b4-4e16-8b4b-0530b6f185d4" class="numbered-list" start="1"><li>Añadir los siguientes  test en el fichero de test unitarios :</li></ol><ol id="40cfb583-9275-44c9-a373-191728a0bca1" class="numbered-list" start="2"><li>Ejecutar el script del package.json  <strong>test</strong></li></ol><ol id="1026262d-12c2-4540-89c8-872968352175" class="numbered-list" start="3"><li>En el caso de que el componente desarrollado sea  un widget añadir la configuración de karma.js</li></ol><p id="783d9d56-7a5e-4b07-bbd9-d33afe4ffd5c" class="">
+</p><pre id="b9538413-10b7-4dd6-a106-53de17ce6e73" class="code"><code>suite(&#x27;Semantic Dom&#x27;, () *=&gt;* {
+	test(&#x27;DOM - Structure test&#x27;, () *=&gt;* {
+		assert.dom.equalSnapshot(el);
+	});
+	
+	test(&#x27;SHADOW DOM - Structure test&#x27;, () *=&gt;* {
+		assert.shadowDom.equalSnapshot(el);
+	});
+	
+	test(&#x27;LIGHT DOM - Structure test&#x27;, () *=&gt;* {
+		assert.lightDom.equalSnapshot(el);
+	});
+});
+
+
+</code></pre><h1 id="5955f8fe-a476-4754-ae06-26aa0bf6b90b" class="">5. Styles</h1><p id="62c1d9ed-3b6f-45e3-a5dc-8cb488f77a3c" class="">Todas las propiedades susceptibles de ser editadas desde otro componente deben obtener su valor de una variable. A su vez esta variable debe llevar un <em>fallBack</em> que obtendrá  de <strong>foundations.</strong></p><p id="87665627-d6dc-41a4-940c-dc7fc830bd92" class="">
+</p><p id="d5d69d9b-b495-4c72-a120-84984cd43db4" class="">Todas las medidas deben ser relativas, se pueden utilizar la función rem para convertir pixeles a rems o la función caclSpacer, que puede recibir varios parámetros.</p><pre id="b75c2748-076a-49ea-92e4-7adfdde7d780" class="code"><code>margin: rem(16px)</code></pre><pre id="94559fbe-77d0-4213-92f8-b734f49c0b74" class="code"><code>@function calcSpacer($spacerValue, $unit: rem, $base-font-size: 16, $baseGridSpacerValue: 8)
+margin: calcSpacer(24px, rem)</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="28729e9f-d581-40ea-847f-bb7fec551b61"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong>foundations </strong>es una dependencia incluida en @cells/cells-component-core, también es necesaria la dependencia @bbva-web-components/bbva-foundations-styles y debe ser importada en component-name-styles.js</div></figure><h1 id="f884106e-e023-47ea-98e2-8a0a7e47257d" class="">6. Enviar Pull Request</h1><p id="f8d2471a-4c7b-45e3-b59f-b5e60b589939" class="">Todos los componentes de este repositorio <a href="https://globaldevtools.bbva.com/bitbucket/projects/BBVA_GLOBAL_UI_STUDIO_WEB_COMPONENTS/repos/bbva-web-components-app/browse">bbva-web-components-app</a> pueden ser editados siempre y cuando se cumplan dos premisas :</p><ul id="d08f2d5d-01b5-416b-9a89-d416a93047c1" class="bulleted-list"><li>Los cambios realizados están validados y publicados por federación de diseño en <a href="https://ui.bbvaexperience.com/">BBVA Experience</a></li></ul><ul id="72172ece-40d5-4425-bc30-7f0d1ab5a099" class="bulleted-list"><li>Todos los cambios deben ser enviados mediante pull reques siguiendo el paradigma fork - branch</li></ul><p id="3527c875-beaf-4ba4-a0a6-62536a55a642" class="">
+</p><p id="b1c05a24-2936-4e5d-9093-7ef169a67310" class="">Las reglas básicas para la aprobación de pull request se pueden consutar en <a href="https://teamspaces.bbva.com/teamspaces/web-components-gov-dev/files/definiciones_reglas/pull-requests_-requisitos-y-procedimiento/">Team Spaces del Gobierno de Componentes</a>, siendo las más importantes las sigueintes :</p><ul id="f93dcbd7-a324-4f56-9398-be9ff63acb33" class="bulleted-list"><li>Todas las modificaciones visuales deben estar publicadas previamente en BEX</li></ul><ul id="ffff8b0a-2eef-4645-8fcc-718de85b22f9" class="bulleted-list"><li>La cobertura de test unitarios debe ser de al menos el 80% y nunca inferior a la existente antes de la aportación</li></ul><ul id="2bf95569-5b11-4e5d-a532-c6090f03bfde" class="bulleted-list"><li>La pull request debe incluir un solo commit (commit squash)</li></ul><ul id="4750902a-944d-4532-8e8f-70384cf88ccb" class="bulleted-list"><li>Los mensajes de commit deben seguir las <a href="https://github.com/conventional-changelog/commitlint">reglas</a> de <a href="https://www.conventionalcommits.org/en/v1.0.0/">convntional commits</a></li></ul><p id="94e4553c-e5f4-42d0-b4b2-e6c22ccdd4af" class="">
+</p><p id="a391c452-0d37-43d8-9afb-0b8c13501a2c" class="">
+</p></div></article></body></html>
